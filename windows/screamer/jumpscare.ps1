@@ -2,7 +2,7 @@
 
 $RI = Get-Random @(1..3)
 
-$image =  "hhttps://github.com/PommeDAPI7749/Screamer/woman-screaming.jpg"
+$image =  "https://github.com/PommeDAPI7749/USBPranks/blob/main/windows/screamer/woman-screaming.jpg"
 
 $i = -join($image,"?dl=1")
 
@@ -10,7 +10,7 @@ iwr $i -O $env:TMP\i.png
 
 # Download WAV file; replace link to $wav to add your own sound
 
-$wav = "https://github.com/PommeDAPI7749/Screamer/scream.wav?raw=true"
+$wav = "https://github.com/PommeDAPI7749/USBPranks/blob/main/windows/screamer/scream.wav?raw=true"
 
 $w = -join($wav,"?dl=1")
 iwr $w -O $env:TMP\s.wav
