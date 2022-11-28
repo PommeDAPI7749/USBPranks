@@ -2,7 +2,7 @@
 
 $RI = Get-Random @(1..3)
 
-$image =  "https://github.com/PommeDAPI7749/USBPranks/blob/main/windows/screamer/woman-screaming.jpg"
+$image =  "https://github.com/PommeDAPI7749/USBPranks/blob/main/windows/screamer/woman-screaming.png"
 
 $i = -join($image,"?dl=1")
 
